@@ -1,9 +1,11 @@
 import random
 import smtplib
 import datetime as dt
+import os
 
-MY_EMAIL = "astridtesting282@gmail.com"
-PASSWORD = "catZaw1?#"
+MY_EMAIL = os.environ.get("MY_EMAIL")
+MY_OTHER_EMAIL = os.environ.get("MY_OTHER_EMAIL")
+PASSWORD = os.environ.get("PASSWORD")
 
 now = dt.datetime.now()
 day_of_week = now.weekday()
@@ -17,7 +19,7 @@ if day_of_week == 0:
         connection.starttls()
         connection.login(user=MY_EMAIL, password=PASSWORD)
         connection.sendmail(from_addr=MY_EMAIL,
-                            to_addrs="astridtesting282@yahoo.com",
+                            to_addrs=MY_EMAIL,
                             msg=f"Subject:Monday Motivation\n\n {random_quote}"
                             )
 

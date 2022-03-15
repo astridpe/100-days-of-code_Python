@@ -2,10 +2,11 @@ import random
 import smtplib
 import datetime as dt
 import pandas
+import os
 
 
-MY_EMAIL = "astridtesting282@gmail.com"
-PASSWORD = "catZaw1?#"
+MY_EMAIL = os.environ.get("MY_EMAIL")
+PASSWORD = os.environ.get("PASSWORD")
 
 now = dt.datetime.now()
 today_month = now.month
