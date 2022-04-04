@@ -43,6 +43,6 @@ if will_rain:
         .create(
             body="It's going to rain today. Remember to bring an umbrella ☂️",
             from_=TWILIO_PHONE_NUMBER,
-            to=MY_PHONE_NUMBER
+            to=MY_PHONE_NUMBER,
         )
     print(message.status)
