@@ -1,24 +1,51 @@
 from data_manager import DataManager
 from flight_search import FlightSearch
+from notification_manager import NotificationManager
+import datetime as dt
 
-# 4. Pass the data back to the main.py file, so that you can print the data from main.py
-from data_manager import DataManager
+TOMORROW = (dt.date.today() + dt.timedelta(days=1))
+SIX_MONTHS_FROM_TODAY = TOMORROW + dt.timedelta(days=(6 * 30))
+ORIGIN_CITY_IATA_CODE = "LON"
 
 data_manager = DataManager()
 sheet_data = data_manager.get_sheet_data()
-print(sheet_data)
+flight_search = FlightSearch()
+notification_manager = NotificationManager()
 
-#  5. In main.py check if sheet_data contains any values for the "iataCode" key.
-#  If not, then the IATA Codes column is empty in the Google Sheet.
-#  In this case, pass each city name in sheet_data one-by-one
-#  to the FlightSearch class to get the corresponding IATA code
-#  for that city using the Flight Search API.
-#  You should use the code you get back to update the sheet_data dictionary.
 if sheet_data[0]["iataCode"] == "":
-    flight_search = FlightSearch()
     for data in sheet_data:
         data["iataCode"] = flight_search.get_iataCode(data["city"])
+        data_manager.destination_data = sheet_data
+        data_manager.update_sheet_data()
 
-print(f"sheet_data:\n {sheet_data}")
-data_manager.destination_data = sheet_data
-data_manager.update_sheet_data()
+for destination in sheet_data:
+    flight = flight_search.check_flight(
+        ORIGIN_CITY_IATA_CODE,
+        destination["iataCode"],
+        from_time=TOMORROW,
+        to_time=SIX_MONTHS_FROM_TODAY
+    )
+    try:
+        if destination["lowestPrice"] > flight.price:
+            notification_manager.send_message(flight.price,
+                                              flight.departure_city,
+                                              flight.departure_airport_code,
+                                              flight.destination_city,
+                                              flight.destination_airport_code,
+                                              flight.out_date,
+                                              flight.return_date, flight.stop_overs, flight.via_city)
+
+            customers = data_manager.get_customer_data()
+            notification_manager.send_email(flight.price,
+                                            flight.departure_city,
+                                            flight.departure_airport_code,
+                                            flight.destination_city,
+                                            flight.destination_airport_code,
+                                            flight.out_date,
+                                            flight.return_date, flight.stop_overs, flight.via_city, customers)
+
+    except AttributeError:
+        continue
+
+
+
