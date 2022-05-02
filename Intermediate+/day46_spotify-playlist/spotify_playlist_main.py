@@ -1,24 +1,24 @@
 import requests
 from bs4 import BeautifulSoup
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
 
-AUTH_URL = ''
-BASE_URL = ''
+SPOTIPY_REDIRECT_URI = ""
 CLIENT_ID = ""
 CLIENT_SECRET = ""
-auth_response = requests.post(AUTH_URL, {"grant_type": "client_credentials",
-                                         "client_id": CLIENT_ID,
-                                         "client_secret": CLIENT_SECRET,
-                                         }
-                              )
 
-auth_response_data = auth_response.json()
-access_token = auth_response_data["access_token"]
+sp = spotipy.Spotify(
+    auth_manager=SpotifyOAuth(
+        scope="playlist-modify-private",
+        redirect_uri="https://example.com",
+        client_id=CLIENT_ID,
+        client_secret=CLIENT_SECRET,
+        show_dialog=True,
+        cache_path="token.txt"
+    )
+)
 
-headers = {
-    'Authorization': 'Bearer {token}'.format(token=access_token)
-}
-
-DATE = input("Which year do you want to travel to? Type the date in this format YYYY-MM-DD: ")
+user_id = sp.current_user()["id"]
 
 
 def get_deatails(bill_board_entry):
@@ -36,10 +36,26 @@ def get_deatails(bill_board_entry):
     return rank, title, artist
 
 
+DATE = input("Which year do you want to travel to? Type the date in this format YYYY-MM-DD: ")
 response = requests.get(f"https://www.billboard.com/charts/hot-100/{DATE}/")
 song_title_page = response.text
 soup = BeautifulSoup(song_title_page, "html.parser")
 table = soup.find_all("div", class_="o-chart-results-list-row-container")
 top100 = [get_deatails(item) for item in table]
 
-print(top100)
+title_names = [title[1] for title in top100]
+song_uris = []
+year = DATE.split("-")[0]
+playlist = sp.user_playlist_create(user=user_id, name=f"{DATE} - Billboard 100", public=False)
+
+for title in title_names:
+    result = sp.search(q=f"track:{title} year:{year}", type="track")
+    try:
+        uri = result["tracks"]["items"][0]["uri"]
+        song_uris.append(uri)
+
+    except IndexError:
+        print(f"'{title}' doesn't exist in Spotify. Skipped.")
+
+sp.playlist_add_items(playlist["id"], song_uris)
+
