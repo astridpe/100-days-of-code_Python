@@ -31,7 +31,6 @@ soup = BeautifulSoup(amazon_page, "lxml")
 price = soup.find("span", class_="a-offscreen").getText()
 price_without_currency = price.split("$")[1]
 price_as_float = float(price_without_currency)
-print(price_as_float)
 
 # 5. When the price is below 100 then use the smtp module to send an email to yourself.
 # In the email, include the title of the product, the current price and a link to buy the product.
