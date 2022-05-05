@@ -3,17 +3,16 @@ from bs4 import BeautifulSoup
 import lxml
 import smtplib
 
-MY_EMAIL = "astridtesting282@gmail.com"
-PASSWORD = "N$&Qm&9nBH%9Xr!"
+MY_EMAIL = ""
+PASSWORD = ""
 
 # 1. Find a product on Amazon that you want to track and get the product URL:
 URL = "https://www.amazon.com/HOKA-ONE-Womens-Rincon-Running/dp/B099W3241F/ref=sr_1_1?keywords=hoka%2Bcarbon%2Bx2" \
       "%2Bwomens&qid=1651773006&sprefix=Hoka%2BCarbon%2BX%2B2%2Bw%2Caps%2C140&sr=8-1&th=1&psc=1"
 
 # 2. Use the requests library to request the HTML page of the Amazon product using the URL you got from 1:
-ACCEPT_LANGUAGE = "nb-NO,nb;q=0.9,no;q=0.8,nn;q=0.7,en-US;q=0.6,en;q=0.5,sv;q=0.4"
-USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)" \
-             "Chrome/101.0.4951.54 Safari/537.36"
+ACCEPT_LANGUAGE = ""
+USER_AGENT = ""
 
 headers = {
     "Accept-Language": ACCEPT_LANGUAGE,
