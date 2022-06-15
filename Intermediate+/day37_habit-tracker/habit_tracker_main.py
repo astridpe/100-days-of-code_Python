@@ -27,8 +27,8 @@ user_parameters = {
 # 2. Create a graph definition:
 graph_config = {
     "id": GRAPH_ID,
-    "name": "Sleeping Graph",
-    "unit": "Hours",
+    "name": "Exersice graph",
+    "unit": "Seconds",
     "type": "float",
     "color": "ajisai",
 }
@@ -43,16 +43,16 @@ headers = {
 # 3. Posting a pixel:
 pixel_config = {
     "date": TODAY,
-    "quantity": input("How many hours of sleep did you get tonight? ")
+    "quantity": input("How many seconds did you exersice today? ")
 }
 
 response = requests.post(url=pixel_creation_endpoint, headers=headers, json=pixel_config)
 print(response.text)
 
 # 4. update a pixel:
-pixel_update = {
-    "quantity": "6.51"
-}
+# pixel_update = {
+#     "quantity": "6.51"
+# }
 
 # response = requests.put(url=pixel_update_endpoint, json=pixel_update, headers=headers)
 # print(response.text)
