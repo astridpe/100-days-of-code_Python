@@ -1,8 +1,8 @@
 from InstaFollower import InstaFollower
 
 SIMILAR_ACCOUNT = "python.learning"
-USERNAME = "astridtesting282"
-PASSWORD = "vs+RJE5F/8w9GFq"
+USERNAME = ""
+PASSWORD = ""
 
 # 3. Outside the class InstaFollower, initialise the object and call the three methods in order:
 follower_bot = InstaFollower()
