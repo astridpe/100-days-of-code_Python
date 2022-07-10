@@ -9,7 +9,7 @@ body {
 }
 
 .container-fluid {
-  padding: 3% 15%;
+  padding: 3% 15% 7%;
 }
 
 
@@ -65,14 +65,17 @@ p {
 
 .title-img {
   transform: rotate(25deg);
-  width: 60%
+  width: 60%;
+  position: absolute;
+  right: 30%;
 }
 
 /* Features Section */
 
 #features {
   padding: 7% 15%;
-
+  background-color: #ffffff;
+  position: relative;
 }
 
 .feature-box {
@@ -110,7 +113,7 @@ p {
   padding: 7% 15%;
 }
 
-/* press Section */
+/* Press Section */
 
 #press {
   background-color: #ef8172;
@@ -121,4 +124,15 @@ p {
 .press-logo {
   width: 15%;
   margin: 20px 20px 50px;
+}
+
+/* Pricing Section */
+
+#pricing {
+  padding: 100px;
+  text-align: center;
+}
+
+.pricing-column {̋
+  padding: 3% 2%;
 }
