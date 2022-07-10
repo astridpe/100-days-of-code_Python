@@ -136,3 +136,45 @@ p {
 .pricing-column {̋
   padding: 3% 2%;
 }
+
+/* Call to Action Section */
+
+#cta {
+  background-color: #ff4c68;
+  padding: 7% 15%;
+  text-align: center;
+
+}
+
+.cta-title {
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 3.7rem;
+}
+
+/* Footer Section */
+
+#footer {
+  background-color: #ffffff;
+  padding: 7% 15%;
+  text-align: center;
+}
+
+.footer-icon {
+  margin: 15px 7px;
+}
+
+
+/* Media Query Breakpoints */
+
+@media (max-width: 1028px) {
+
+  #title {
+    text-align: center;
+  }
+
+  .title-img {
+    position: static;
+    transform: rotate(0);
+  }
+}
